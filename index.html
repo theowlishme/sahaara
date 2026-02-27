@@ -1,240 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SAHAARA</title>
-
-<!-- Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
-
-body {
-  background: linear-gradient(135deg, #4f46e5, #9333ea);
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.card {
-  background: white;
-  width: 90%;
-  max-width: 500px;
-  padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-  text-align: center;
-}
-
-h1 {
-  font-size: 28px;
-  margin-bottom: 10px;
-}
-
-p {
-  color: #555;
-  margin-bottom: 20px;
-}
-
-.button {
-  display: block;
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  transition: 0.3s;
-}
-
-.primary {
-  background: #4f46e5;
-  color: white;
-}
-
-.primary:hover {
-  background: #3730a3;
-}
-
-.secondary {
-  background: #e5e7eb;
-}
-
-.secondary:hover {
-  background: #d1d5db;
-}
-
-.progress {
-  height: 8px;
-  background: #e5e7eb;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  overflow: hidden;
-}
-
-.progress-bar {
-  height: 100%;
-  width: 33%;
-  background: #4f46e5;
-}
-
-.hidden {
-  display: none;
-}
-
-.chat-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #4f46e5;
-  color: white;
-  border: none;
-  padding: 15px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 20px;
-}
-
-.chat-box {
-  position: fixed;
-  bottom: 80px;
-  right: 20px;
-  width: 300px;
-  background: white;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  padding: 15px;
-  display: none;
-}
-
-.chat-box input {
-  width: 100%;
-  padding: 8px;
-  margin-top: 10px;
-}
-
-.result-box {
-  background: #f0f9ff;
-  padding: 15px;
-  border-radius: 10px;
-  margin-top: 15px;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAHAARA</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-<div class="card" id="screen">
+  <div class="card" id="screen">
+    <h1>Welcome to SAHAARA</h1>
+    <p>Select your language</p>
 
-  <h1>Welcome to SAHAARA</h1>
-  <p>Select your language</p>
+    <button class="btn secondary" onclick="goToLogin()">🇬🇧 English</button>
+    <button class="btn secondary" onclick="goToLogin()">🇮🇳 हिन्दी</button>
+    <button class="btn secondary" onclick="goToLogin()">🇮🇳 മലയാളം</button>
+  </div>
 
-  <button class="button secondary" onclick="nextScreen('login')">🇬🇧 English</button>
-  <button class="button secondary" onclick="nextScreen('login')">🇮🇳 हिन्दी</button>
-  <button class="button secondary" onclick="nextScreen('login')">🇮🇳 മലയാളം</button>
+  <!-- Chat Button -->
+  <button class="chat-btn" onclick="toggleChat()">💬</button>
 
-</div>
-
-<button class="chat-btn" onclick="toggleChat()">💬</button>
-
-<div class="chat-box" id="chatBox">
-  <p><b>SAHAARA Assistant</b></p>
-  <p>Hello! How can I help you?</p>
-  <input type="text" placeholder="Type your question...">
-</div>
-
-<script>
-let step = 1;
-let userType = "";
-let helpType = "";
-
-function nextScreen(type) {
-
-  const screen = document.getElementById("screen");
-
-  if (type === "login") {
-    screen.innerHTML = `
-      <h1>SAHAARA</h1>
-      <p>Login Securely</p>
-      <button class="button primary" onclick="nextScreen('question1')">Login with Aadhaar</button>
-      <button class="button secondary">Login with DigiLocker</button>
-    `;
-  }
-
-  if (type === "question1") {
-    screen.innerHTML = `
-      <div class="progress"><div class="progress-bar" style="width:33%"></div></div>
-      <h1>Who are you?</h1>
-      <button class="button secondary" onclick="selectUser('widow')">Widow</button>
-      <button class="button secondary" onclick="selectUser('orphan')">Orphan</button>
-      <button class="button secondary" onclick="selectUser('disabled')">Person with Disability</button>
-    `;
-  }
-
-  if (type === "question2") {
-    screen.innerHTML = `
-      <div class="progress"><div class="progress-bar" style="width:66%"></div></div>
-      <h1>Select Location</h1>
-      <button class="button secondary" onclick="nextScreen('question3')">Ernakulam</button>
-      <button class="button secondary" onclick="nextScreen('question3')">Kottayam</button>
-      <button class="button secondary" onclick="nextScreen('question3')">Kozhikode</button>
-    `;
-  }
-
-  if (type === "question3") {
-    screen.innerHTML = `
-      <div class="progress"><div class="progress-bar" style="width:100%"></div></div>
-      <h1>What help do you need?</h1>
-      <button class="button secondary" onclick="selectHelp('pension')">Pension</button>
-      <button class="button secondary" onclick="selectHelp('job')">Job Training</button>
-      <button class="button secondary" onclick="selectHelp('education')">Education</button>
-    `;
-  }
-
-  if (type === "results") {
-    showResults();
-  }
-}
-
-function selectUser(type) {
-  userType = type;
-  nextScreen('question2');
-}
-
-function selectHelp(type) {
-  helpType = type;
-  nextScreen('results');
-}
-
-function showResults() {
-  const screen = document.getElementById("screen");
-
-  screen.innerHTML = `
-    <h1>Eligible Scheme Found 🎉</h1>
-    <div class="result-box">
-      <p><b>Scheme:</b> Kerala Social Support Scheme</p>
-      <p><b>Benefit:</b> ₹1,000 per month</p>
-      <p><b>Processing Time:</b> 15-30 days</p>
-      <p><b>Required Documents:</b> Aadhaar, Bank Passbook, Proof Certificate</p>
+  <!-- Chat Box -->
+  <div class="chat-box" id="chatBox">
+    <div class="chat-header">
+      SAHAARA Assistant
+      <span onclick="toggleChat()">✖</span>
     </div>
-    <button class="button primary" onclick="location.reload()">Start Again</button>
-  `;
-}
 
-function toggleChat() {
-  const chat = document.getElementById("chatBox");
-  chat.style.display = chat.style.display === "block" ? "none" : "block";
-}
-</script>
+    <div class="chat-messages" id="chatMessages">
+      <p><b>Assistant:</b> Hello! How can I help you?</p>
+    </div>
 
+    <div class="chat-input">
+      <input type="text" id="chatInput" placeholder="Type your question...">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
