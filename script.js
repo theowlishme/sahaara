@@ -1,67 +1,68 @@
-function goToLogin() {
-  const screen = document.getElementById("screen");
+document.addEventListener("DOMContentLoaded", function () {
 
-  screen.innerHTML = `
-    <h1>SAHAARA</h1>
-    <p>Secure Government Login</p>
+  window.goToLogin = function () {
+    const screen = document.getElementById("screen");
 
-    <button class="btn primary" onclick="authenticate('aadhaar')">
-      🔐 Login with Aadhaar
-    </button>
-
-    <button class="btn secondary" onclick="authenticate('digilocker')">
-      🏛 Login with DigiLocker
-    </button>
-  `;
-}
-
-function authenticate(type) {
-  const screen = document.getElementById("screen");
-
-  screen.innerHTML = `
-    <h1>Authenticating...</h1>
-    <p>Connecting to ${type === 'aadhaar' ? 'Aadhaar' : 'DigiLocker'} securely...</p>
-  `;
-
-  setTimeout(() => {
     screen.innerHTML = `
-      <h1>Login Successful ✅</h1>
-      <p>Welcome to SAHAARA Platform</p>
+      <h1>SAHAARA</h1>
+      <p>Secure Government Login</p>
 
-      <button class="btn primary" onclick="startQuestions()">
-        Continue
+      <button class="btn primary" onclick="authenticate('aadhaar')">
+        🔐 Login with Aadhaar
+      </button>
+
+      <button class="btn secondary" onclick="authenticate('digilocker')">
+        🏛 Login with DigiLocker
       </button>
     `;
-  }, 2000);
-}
+  };
 
-function startQuestions() {
-  const screen = document.getElementById("screen");
+  window.authenticate = function (type) {
+    const screen = document.getElementById("screen");
 
-  screen.innerHTML = `
-    <h1>Who are you?</h1>
+    screen.innerHTML = `
+      <h1>Authenticating...</h1>
+      <p>Connecting to ${type === 'aadhaar' ? 'Aadhaar' : 'DigiLocker'}...</p>
+    `;
 
-    <button class="btn secondary">Widow</button>
-    <button class="btn secondary">Orphan</button>
-    <button class="btn secondary">Person with Disability</button>
-  `;
-}
+    setTimeout(() => {
+      screen.innerHTML = `
+        <h1>Login Successful ✅</h1>
+        <button class="btn primary" onclick="startQuestions()">
+          Continue
+        </button>
+      `;
+    }, 2000);
+  };
 
-/* Chat Functions */
-function toggleChat() {
-  const chat = document.getElementById("chatBox");
-  chat.style.display = chat.style.display === "flex" ? "none" : "flex";
-}
+  window.startQuestions = function () {
+    const screen = document.getElementById("screen");
 
-function sendMessage() {
-  const input = document.getElementById("chatInput");
-  const messages = document.getElementById("chatMessages");
+    screen.innerHTML = `
+      <h1>Who are you?</h1>
 
-  if (input.value.trim() === "") return;
+      <button class="btn secondary">Widow</button>
+      <button class="btn secondary">Orphan</button>
+      <button class="btn secondary">Person with Disability</button>
+    `;
+  };
 
-  messages.innerHTML += `<p><b>You:</b> ${input.value}</p>`;
-  messages.innerHTML += `<p><b>Assistant:</b> I can help with schemes, documents, or nearby offices.</p>`;
+  window.toggleChat = function () {
+    const chat = document.getElementById("chatBox");
+    chat.style.display = chat.style.display === "flex" ? "none" : "flex";
+  };
 
-  input.value = "";
-  messages.scrollTop = messages.scrollHeight;
-}
+  window.sendMessage = function () {
+    const input = document.getElementById("chatInput");
+    const messages = document.getElementById("chatMessages");
+
+    if (input.value.trim() === "") return;
+
+    messages.innerHTML += `<p><b>You:</b> ${input.value}</p>`;
+    messages.innerHTML += `<p><b>Assistant:</b> I can help with schemes.</p>`;
+
+    input.value = "";
+    messages.scrollTop = messages.scrollHeight;
+  };
+
+});
